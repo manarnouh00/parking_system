@@ -22,90 +22,96 @@ class _MapPageState extends State<MapPage> {
     final args = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Parking Status',
-              style: kTitleTextStyle,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Row(
-              children: [
-                Text(
-                  'P1',
-                  style: kTitleTextStyle,
-                ),
-                Text(
-                  '1st Floor',
-                  style: kSubTitleTextStyle,
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('images/mapbg.jpg'),
-                fit: BoxFit.fill,
-              )),
-              child: StreamBuilder<DatabaseEvent>(
 
-                stream: _firestore.onValue.asBroadcastStream(),
-                builder: (context,snapshot){
-                  if(snapshot.hasData){
-                  var data_x = snapshot.data!.snapshot.value;
-                  List<ParkingCard> parkingWidget = [];
-                  var data_map = data_x as Map<Object?,dynamic>;
-                  var map_keys = data_map.keys.toList()..sort();
-                  print(map_keys);
-                  for(var k in map_keys){
-                    final p = ParkingCard(
-                      name:k.toString(),
-                      parkState: ParkingSlots.toState(data_map[k]!['state'],
-                    ), );
-                    parkingWidget.add(p);
-                  }
-                    return GridView.count(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 110,
-                      crossAxisCount: 2,
-                      children: parkingWidget,
-                    );
-
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting){
-                    return CircularProgressIndicator();
-                  }
-
-                return Text("ERROR"); //TODO ERROR
-                }
+      body:SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Parking Status',
+                style: kTitleTextStyle,
               ),
+              SizedBox(
+                height: 5.0,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'P1',
+                    style: kTitleTextStyle,
+                  ),
+                  Text(
+                    '1st Floor',
+                    style: kSubTitleTextStyle,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage('images/mapbg.jpg'),
+                  fit: BoxFit.fill,
+                )),
+                child: StreamBuilder<DatabaseEvent>(
 
-            ),
-            SizedBox(
-              height: 30.0,
-            ),
-            Center(
-              child: mainButton(
-                  text: 'Reserve',
-                  onPressed: () {
+                  stream: _firestore.onValue.asBroadcastStream(),
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                    var data_x = snapshot.data!.snapshot.value;
+                    List<ParkingCard> parkingWidget = [];
+                    var data_map = data_x as Map<Object?,dynamic>;
+                    var map_keys = data_map.keys.toList()..sort();
+                    print(map_keys);
+                    for(var k in map_keys){
+                      final p = ParkingCard(
+                        name:k.toString(),
+                        parkState: ParkingSlots.toState(data_map[k]!['state'],
+                      ), );
+                      parkingWidget.add(p);
+                    }
+                      return GridView.count(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        mainAxisSpacing: 0,
+                        crossAxisSpacing: 110,
+                        crossAxisCount: 2,
+                        children: parkingWidget,
+                      );
 
-                    Navigator.pushNamed(context, ReserveScreen.id, arguments: args);
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting){
+                      return CircularProgressIndicator();
+                    }
 
-                  }),
-            ),
-          ],
+                  return Text("ERROR"); //TODO ERROR
+                  }
+                ),
+
+              ),
+              SizedBox(
+                height: 30.0,
+              ),
+              Center(
+                child: mainButton(
+                    text: 'Reserve',
+                    onPressed: () {
+
+                      Navigator.pushNamed(context, ReserveScreen.id, arguments: args);
+
+                    }),
+              ),
+          SizedBox(
+            height: 40.0,
+          )
+            ],
+          ),
         ),
       ),
     );

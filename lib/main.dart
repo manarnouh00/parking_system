@@ -45,15 +45,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(390.0, 845.13),
-      builder: () => MaterialApp(
+      builder: (BuildContext context,child) => MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(scaffoldBackgroundColor:  kThemeColor),
           //initialRoute: LoginScreen.id,
           home: AnimatedSplashScreen(
             splash: Column(
-                children:[
+              children:[
                 Center(child: Image.asset('images/parking_img.png',width: 400,height: 30,)),
-                  const Text('El Sayes App',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),)
+                const Text('El Sayes App',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),)
               ],
             ),
             backgroundColor: kThemeColor,

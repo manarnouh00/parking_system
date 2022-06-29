@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
+            reverse: true,
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,

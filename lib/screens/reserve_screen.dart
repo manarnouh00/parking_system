@@ -183,161 +183,164 @@ class _ReserveScreenState extends State<ReserveScreen> {
     final args = ModalRoute.of(context)!.settings.arguments; // TO MAKE DYNAMIC FOR LATER
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Reserve Parking',
-              style: kTitleTextStyle,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Center(
-              child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                    ),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Cairo Festival City Parking', //TODO DYNAMIC LOCATION
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.location_on_outlined,
-                                color: Colors.black,
-                                size: 20.0,
-                              ),
-                            ]),
-                        SizedBox(height: 5.0),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          child: Text('$available_spots slots out of $total_spots are vacant now', //TODO color change dynamic acccording to vacancy
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                              )),
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          '30, Cairo Festival City Mall, New Cairo',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
-            ),
-            SizedBox(
-              height: 50.0,
-            ),
-            Center(
-              child: Text.rich(TextSpan(
-                  text: 'The garage will have ', //TODO MAKE TEXT DYNAMIC
-                  style: kSubTitleTextStyle.copyWith(height:1.2),
-                  children: [
-                    TextSpan(
-                        text: ((1.0-popularity) * total_spots).toInt().toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        )),
-                    TextSpan(text: ' vacant spots at ', style: const TextStyle()),
-                    TextSpan(
-                        text: now.toString() + ':00',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-
-                        )),
-                    TextSpan(
-                      text: '. Hurry up and reserve!',
-                    )
-                  ])),
-            ),
-
-            SizedBox(height:20.0),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children:[
-                  SleekCircularSlider(
-                    appearance: CircularSliderAppearance(
-                      size: 320.0,
-                      customColors: CustomSliderColors(
-                        trackColor: Colors.white,
-                        progressBarColor: Colors.blue,
-                        hideShadow: true,
-
-                      ),
-                      customWidths: CustomSliderWidths(
-                        progressBarWidth: 15,
-                        trackWidth: 6,
-                        handlerSize: 5,
-                      ),
-                      infoProperties: InfoProperties(
-                        mainLabelStyle: kSubTitleTextStyle.copyWith(fontWeight: FontWeight.bold,
-                        fontSize: 50.0,),
-                        topLabelText: 'Arrive in',
-                        topLabelStyle: kSubTitleTextStyle.copyWith(fontWeight: FontWeight.bold,),
-                        bottomLabelText: 'minutes',
-                        bottomLabelStyle: kSubTitleTextStyle.copyWith(fontWeight: FontWeight.bold,),
-                        modifier:   (double value) {
-                            final roundedValue = value.ceil().toInt().toString();
-                              return '$roundedValue ';
-                                  },
-                      )
-                    ),
-
-                    initialValue: 0,
-                    max: 60,
-                    onChangeEnd: (double value){
-                      arrive_in = value.toInt();
-                    },
-                  )
-                ]
+        body: SingleChildScrollView(
+          child: Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Reserve Parking',
+                style: kTitleTextStyle,
               ),
-            ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Center(
+                child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Cairo Festival City Parking', //TODO DYNAMIC LOCATION
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.location_on_outlined,
+                                  color: Colors.black,
+                                  size: 20.0,
+                                ),
+                              ]),
+                          SizedBox(height: 5.0),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Text('$available_spots slots out of $total_spots are vacant now', //TODO color change dynamic acccording to vacancy
+                                style: TextStyle(
+                                  color: Colors.blueAccent,
+                                )),
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(
+                            '30, Cairo Festival City Mall, New Cairo',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+              Center(
+                child: Text.rich(TextSpan(
+                    text: 'The garage will have ', //TODO MAKE TEXT DYNAMIC
+                    style: kSubTitleTextStyle.copyWith(height:1.2),
+                    children: [
+                      TextSpan(
+                          text: ((1.0-popularity) * total_spots).toInt().toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          )),
+                      TextSpan(text: ' vacant spots at ', style: const TextStyle()),
+                      TextSpan(
+                          text: now.toString() + ':00',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+
+                          )),
+                      TextSpan(
+                        text: '. Hurry up and reserve!',
+                      )
+                    ])),
+              ),
+
+              SizedBox(height:20.0),
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children:[
+                    SleekCircularSlider(
+                      appearance: CircularSliderAppearance(
+                        size: 320.0,
+                        customColors: CustomSliderColors(
+                          trackColor: Colors.white,
+                          progressBarColor: Colors.blue,
+                          hideShadow: true,
+
+                        ),
+                        customWidths: CustomSliderWidths(
+                          progressBarWidth: 15,
+                          trackWidth: 6,
+                          handlerSize: 5,
+                        ),
+                        infoProperties: InfoProperties(
+                          mainLabelStyle: kSubTitleTextStyle.copyWith(fontWeight: FontWeight.bold,
+                          fontSize: 50.0,),
+                          topLabelText: 'Arrive in',
+                          topLabelStyle: kSubTitleTextStyle.copyWith(fontWeight: FontWeight.bold,),
+                          bottomLabelText: 'minutes',
+                          bottomLabelStyle: kSubTitleTextStyle.copyWith(fontWeight: FontWeight.bold,),
+                          modifier:   (double value) {
+                              final roundedValue = value.ceil().toInt().toString();
+                                return '$roundedValue ';
+                                    },
+                        )
+                      ),
+
+                      initialValue: 0,
+                      max: 60,
+                      onChangeEnd: (double value){
+                        arrive_in = value.toInt();
+                      },
+                    )
+                  ]
+                ),
+              ),
 
 
-            Center(child:
-            mainButton(
-                text: has_capacity? 'Confirm' : 'Full Capacity',
-                onPressed: ()async{
-                  print(popularity);
-                  bool has_reservation = await ViewModel.getUserReservationStatus();
-                  if(has_reservation){
-                    return _showAlertDialog();
-                  }
-                  else if(has_capacity){
-                    return _showConfirmationDialog();
-                  }
-                },
-                color: has_capacity? kButtonColor : Colors.grey
-                )
-            ),
-          ],
-        ),
+              Center(child:
+              mainButton(
+                  text: has_capacity? 'Confirm' : 'Full Capacity',
+                  onPressed: ()async{
+                    print(popularity);
+                    bool has_reservation = await ViewModel.getUserReservationStatus();
+                    if(has_reservation){
+                      return _showAlertDialog();
+                    }
+                    else if(has_capacity){
+                      return _showConfirmationDialog();
+                    }
+                  },
+                  color: has_capacity? kButtonColor : Colors.grey
+                  )
+              ),
+              SizedBox(height:20.0),
+            ],
+          ),
       ),
+        ),
     );
   }
 }
